@@ -1,23 +1,46 @@
+const util = require("../helper/util");
 const validator = require("../helper/validation");
-const serviceVisitor = async (req) => {
+const visitorRepository = require("../repository/visitor");
+const getAllVisitor = (res) => {
+  visitorRepository.getAllVisitor(res);
+};
+const createVisitor = (req, res) => {
   const validationRule = {
-    name: "required|string|email",
+    name: "required|string",
     message: "required|string",
-    lat: "float",
-    lng: "float",
+    lat: "string",
+    lng: "string",
   };
 
-  await validator(req.body, validationRule, {}, (err, status) => {
+  validator(req.body, validationRule, {}, (err, status) => {
     if (!status) {
-      res.status(412).send({
+      return res.status(400).send({
         success: false,
         message: "Validation failed",
-        data: err,
+        errors: err,
       });
-    } else {
-      next();
     }
-  }).catch((err) => console.log(err));
+  }).catch((err) => {
+    return res.status(500).send({
+      success: false,
+      message: "Internal server error: " + err.message,
+    });
+  });
+
+  const request = {
+    id: btoa(new Date().getTime().toString()),
+    name: req.body.name,
+    lat: req.body?.lat ?? null,
+    lng: req.body?.lng ?? null,
+    message: req.body.message,
+    createdAt: util.getDateTime(),
+  };
+
+  visitorRepository.createVisitor(request, res);
+};
+const visitorService = {
+  getAllVisitor,
+  createVisitor,
 };
 
-module.exports = serviceVisitor;
+module.exports = visitorService;
