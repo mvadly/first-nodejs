@@ -17,7 +17,7 @@ const createVisitor = (req, res) => {
       return res.status(400).send({
         success: false,
         message: "Validation failed",
-        errors: err,
+        data: err,
       });
     }
   }).catch((err) => {
