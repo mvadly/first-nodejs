@@ -5,11 +5,11 @@ const app = express();
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-
+const dataJson = "../../data.json";
 const VisitorController = {
   // Menampilkan data
   getAll: (req, res) => {
-    fs.readFile("./data.json", "utf8", (err, data) => {
+    fs.readFile(dataJson, "utf8", (err, data) => {
       if (err) throw err;
       res.json(JSON.parse(data));
     });
@@ -17,7 +17,7 @@ const VisitorController = {
 
   // Menambahkan data
   create: (req, res) => {
-    fs.readFile("./data.json", "utf8", (err, data) => {
+    fs.readFile(dataJson, "utf8", (err, data) => {
       if (err) throw err;
       const obj = JSON.parse(data);
       obj.push(req.body);
@@ -30,7 +30,7 @@ const VisitorController = {
 
   // Mengubah data
   update: (req, res) => {
-    fs.readFile("./data.json", "utf8", (err, data) => {
+    fs.readFile(dataJson, "utf8", (err, data) => {
       if (err) throw err;
       const obj = JSON.parse(data);
       const index = obj.findIndex((item) => item.id == req.params.id);
@@ -48,7 +48,7 @@ const VisitorController = {
 
   // Menghapus data
   delete: (req, res) => {
-    fs.readFile("./data.json", "utf8", (err, data) => {
+    fs.readFile(dataJson, "utf8", (err, data) => {
       if (err) throw err;
       const obj = JSON.parse(data);
       const index = obj.findIndex((item) => item.id == req.params.id);
@@ -65,4 +65,4 @@ const VisitorController = {
   },
 };
 
-module.exports = VisitorController
+module.exports = VisitorController;
