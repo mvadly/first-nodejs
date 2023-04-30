@@ -7,15 +7,26 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-const dataJson = path.join("", "./data.json");
+const dataJson = path.join("z", "./data.json");
 const visitorController = {
   // Menampilkan data
   getAll: (req, res) => {
     console.log(req);
     fs.readFile(dataJson, "utf8", (err, data) => {
-        console.table(err, data)
-      if (err) throw err;
-      res.json(JSON.parse(data));
+      console.log("error:", err);
+      console.log("data:", data);
+      if (err) {
+        return res.json({
+          status: false,
+          message: err.message,
+          data: null,
+        });
+      }
+      res.json({
+        status: true,
+        message: "OK",
+        data: JSON.parse(data),
+      });
     });
   },
 
