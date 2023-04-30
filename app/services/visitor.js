@@ -28,7 +28,6 @@ const createVisitor = (req, res) => {
   });
 
   const request = {
-    id: btoa(new Date().getTime().toString()),
     name: req.body.name,
     lat: req.body?.lat ?? null,
     lng: req.body?.lng ?? null,
