@@ -5,8 +5,8 @@ const app = express();
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-const dataJson = "../../data.json";
-const VisitorController = {
+const dataJson = "./data.json";
+const visitorController = {
   // Menampilkan data
   getAll: (req, res) => {
     fs.readFile(dataJson, "utf8", (err, data) => {
@@ -65,4 +65,4 @@ const VisitorController = {
   },
 };
 
-module.exports = VisitorController;
+module.exports = visitorController;

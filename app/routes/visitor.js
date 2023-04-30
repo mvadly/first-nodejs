@@ -1,10 +1,10 @@
 const express = require("express");
-const VisitorController = require("../controller/visitor");
+const visitorController = require("../controller/visitor");
 const visitorRoute = express.Router()
 
-visitorRoute.get('/all', VisitorController.getAll)
-visitorRoute.post('/create', VisitorController.create)
-visitorRoute.put('/update/:id', VisitorController.update)
-visitorRoute.delete('/update/:id', VisitorController.delete)
+visitorRoute.get('/all', visitorController.getAll)
+visitorRoute.post('/create', visitorController.create)
+visitorRoute.put('/update/:id', visitorController.update)
+visitorRoute.delete('/update/:id', visitorController.delete)
 
 module.exports = visitorRoute
