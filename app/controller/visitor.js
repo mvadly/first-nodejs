@@ -7,7 +7,7 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-const dataJson = path.join("z", "./data.json");
+const dataJson = path.join("", "./data.json");
 const visitorController = {
   // Menampilkan data
   getAll: (req, res) => {
