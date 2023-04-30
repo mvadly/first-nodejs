@@ -19,7 +19,7 @@ const getAllVisitor = (res) => {
           data: docs,
         });
       });
-  });
+  })
 };
 const createVisitor = (data, res) => {
   mdb().then((db) => {
