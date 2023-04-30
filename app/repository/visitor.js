@@ -2,7 +2,7 @@ const mdb = require("../../config/database");
 const getAllVisitor = (filter, res) => {
   mdb().then((db) => {
     db.collection("visitor")
-      .find(filter)
+      .find()
       .toArray((err, docs) => {
         if (err) {
           return res.status(500).json({
