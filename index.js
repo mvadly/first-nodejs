@@ -1,18 +1,9 @@
 const express = require("express");
-
+const visitorRoute = require("./app/routes/visitor");
 const app = express();
-
-app.get("/", (req, res) => {
-  res.send("Express on Vercel");
+require("dotenv").config();
+const port = process.env.PORT;
+app.use("/visitor", visitorRoute);
+app.listen(port, () => {
+  console.log(`Server running at http://localhost:${port}`);
 });
-
-app.get("/done", (req, res) => {
-  res.send("Done Build");
-});
-
-app.listen(5000, () => {
-  console.log("Running on port 5000.");
-});
-
-// Export the Express API
-module.exports = app;
