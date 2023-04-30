@@ -1,8 +1,8 @@
 const mdb = require("../../config/database");
-const getAllVisitor = (res) => {
+const getAllVisitor = (filter, res) => {
   mdb().then((db) => {
     db.collection("visitor")
-      .find()
+      .find(filter)
       .toArray((err, docs) => {
         if (err) {
           return res.status(500).json({

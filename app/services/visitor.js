@@ -1,8 +1,14 @@
 const util = require("../helper/util");
 const visitorRepository = require("../repository/visitor");
 const Validator = require("validatorjs");
-const getAllVisitor = (res) => {
-  visitorRepository.getAllVisitor(res);
+const getAllVisitor = (req, res) => {
+  const filter = {
+    name: { $regex: req.query.search, $options: "i" },
+  };
+  visitorRepository.getAllVisitor(
+    req.query.search !== undefined ? filter : {},
+    res
+  );
 };
 const createVisitor = (req, res) => {
   const validationRule = {
