@@ -1,15 +1,17 @@
 const express = require("express");
 const fs = require("fs");
+const path = require("path");
 const bodyParser = require("body-parser");
 const app = express();
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-const dataJson = "./data.json";
+
+const dataJson = path.join("", "./data.json");
 const visitorController = {
   // Menampilkan data
   getAll: (req, res) => {
-    console.log(req)
+    console.log(req);
     fs.readFile(dataJson, "utf8", (err, data) => {
       if (err) throw err;
       res.json(JSON.parse(data));
