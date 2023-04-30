@@ -1,13 +1,9 @@
 const fs = require("fs");
 const checkCreateDb = (request, pathJson, err, res) => {
   if (err.length > 0) {
-    console.log("masuk create db");
     if (err.includes("ENOENT: no such file or directory")) {
-      console.log("masuk create db 2");
       fs.writeFile(pathJson, JSON.stringify([request]), (errCreate) => {
-        console.log("masuk create db 3");
         if (errCreate) {
-          console.log("masuk create db 4");
           return res.status(500).json({
             success: false,
             message:
@@ -18,8 +14,7 @@ const checkCreateDb = (request, pathJson, err, res) => {
         }
       });
     }
-    
-    console.log("masuk create db 5");
+
     return res.status(500).json({
       success: false,
       message: "Internal server error: " + err,
