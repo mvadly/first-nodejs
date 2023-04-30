@@ -1,7 +1,4 @@
 const mdb = require("../../config/database");
-const path = require("path");
-const dataJson = path.join("", "./data.json");
-
 const getAllVisitor = (res) => {
   mdb().then((db) => {
     db.collection("visitor")
@@ -23,7 +20,7 @@ const getAllVisitor = (res) => {
 };
 const createVisitor = (data, res) => {
   mdb().then((db) => {
-    db.collection("visitor").insertOne(data, (err, result) => {
+    db.collection("visitor").insertOne(data, (err) => {
       if (err) {
         return res.status(500).json({
           success: false,

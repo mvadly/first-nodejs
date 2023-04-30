@@ -1,6 +1,6 @@
 const util = require("../helper/util");
-const validator = require("../helper/validation");
 const visitorRepository = require("../repository/visitor");
+const Validator = require("validatorjs");
 const getAllVisitor = (res) => {
   visitorRepository.getAllVisitor(res);
 };
@@ -12,20 +12,15 @@ const createVisitor = (req, res) => {
     lng: "string",
   };
 
-  validator(req.body, validationRule, {}, (err, status) => {
-    if (!status) {
-      return res.status(400).send({
-        success: false,
-        message: "Validation failed",
-        data: err,
-      });
-    }
-  }).catch((err) => {
-    return res.status(500).send({
+  const validation = new Validator(req.body, validationRule);
+
+  if (validation.fails()) {
+    return res.status(400).send({
       success: false,
-      message: "Internal server error: " + err.message,
+      message: "Validation failed",
+      data: validation.errors.all(),
     });
-  });
+  }
 
   const request = {
     name: req.body.name,
