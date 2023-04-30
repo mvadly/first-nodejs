@@ -2,19 +2,24 @@ const express = require("express");
 const fs = require("fs");
 const path = require("path");
 const bodyParser = require("body-parser");
+const validator = require("../helper/validation");
 const app = express();
-
-app.use(bodyParser.urlencoded({ extended: false }));
+var options = {
+  inflate: true,
+  limit: '100kb',
+  type: 'application/octet-stream'
+};
+// app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+// app.use(bodyParser.raw(options));
+
+
 
 const dataJson = path.join("", "./data.json");
 const visitorController = {
   // Menampilkan data
   getAll: (req, res) => {
-    console.log(req);
     fs.readFile(dataJson, "utf8", (err, data) => {
-      console.log("error:", err);
-      console.log("data:", data);
       if (err) {
         return res.json({
           status: false,
@@ -25,13 +30,30 @@ const visitorController = {
       res.json({
         status: true,
         message: "OK",
-        data: JSON.parse(data),
+        data: data !== "" ? JSON.parse(data) : null,
       });
     });
   },
 
-  // Menambahkan data
   create: (req, res) => {
+    const validationRule = {
+      name: "required|string|email",
+      message: "required|string",
+      lat: "float",
+      lng: "float",
+    };
+
+    return res.json({"req": req.body});
+    // validator(req.body, validationRule, {}, (err, status) => {
+    //   if (!status) {
+    //     return res.status(412).send({
+    //       success: false,
+    //       message: "Validation failed",
+    //       data: err,
+    //     });
+    //   }
+    // }).catch((err) => console.log(err));
+
     fs.readFile(dataJson, "utf8", (err, data) => {
       if (err) throw err;
       const obj = JSON.parse(data);
