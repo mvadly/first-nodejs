@@ -9,6 +9,7 @@ const dataJson = "./data.json";
 const visitorController = {
   // Menampilkan data
   getAll: (req, res) => {
+    console.log(req)
     fs.readFile(dataJson, "utf8", (err, data) => {
       if (err) throw err;
       res.json(JSON.parse(data));
