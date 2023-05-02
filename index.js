@@ -7,7 +7,7 @@ const notFound = require("./app/middleware/notfound");
 const Log = require("./app/middleware/log");
 const Cors = require("./app/middleware/cors");
 require("dotenv").config();
-const port = process.env.PORT;
+const port = 3000;
 app.use(
   cors({
     origin: "*",
