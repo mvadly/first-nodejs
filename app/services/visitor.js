@@ -3,12 +3,17 @@ const visitorRepository = require("../repository/visitor");
 const Validator = require("validatorjs");
 const getAllVisitor = (req, res) => {
   const filter = {
-    name: { $regex: req.query.search, $options: "i" },
+    name: { $regex: req?.query?.search ?? "", $options: "i" },
   };
-  visitorRepository.getAllVisitor(
-    req.query.search !== undefined ? filter : {},
-    res
-  );
+
+  const data = {
+    filter: filter,
+    query: {
+      start: req?.query?.start ?? 0,
+      limit: req?.query?.limit ?? 10,
+    },
+  };
+  visitorRepository.getAllVisitor(data, res);
 };
 const createVisitor = (req, res) => {
   const validationRule = {

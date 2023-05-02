@@ -1,8 +1,10 @@
 const mdb = require("../../config/database");
-const getAllVisitor = (filter, res) => {
+const getAllVisitor = (data, res) => {
   mdb().then((db) => {
     db.collection("visitor")
-      .find()
+      .find(data.filter)
+      .skip(data.query.start)
+      .limit(data.query.limit)
       .sort({ createdAt: -1 })
       .toArray((err, docs) => {
         if (err) {
