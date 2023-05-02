@@ -19,7 +19,7 @@ app.use(bodyParser.json());
 app.use(Log);
 
 app.get("/", (req, res) => {
-  res.json({ message: "First API Express" });
+  res.json({ message: "First API Express Serverless" });
 });
 
 app.get("/info", (req, res) =>

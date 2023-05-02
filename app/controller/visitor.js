@@ -15,7 +15,7 @@ var options = {
 const visitorController = {
   // Menampilkan data
   getAll: (req, res) => {
-    visitorService.getAllVisitor(res);
+    visitorService.getAllVisitor(req, res);
   },
 
   create: (req, res) => {

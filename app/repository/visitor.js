@@ -1,8 +1,9 @@
 const mdb = require("../../config/database");
-const getAllVisitor = (res) => {
+const getAllVisitor = (filter, res) => {
   mdb().then((db) => {
     db.collection("visitor")
       .find()
+      .sort({ createdAt: -1 })
       .toArray((err, docs) => {
         if (err) {
           return res.status(500).json({
@@ -16,8 +17,9 @@ const getAllVisitor = (res) => {
           data: docs,
         });
       });
-  })
+  });
 };
+
 const createVisitor = (data, res) => {
   mdb().then((db) => {
     db.collection("visitor").insertOne(data, (err) => {
