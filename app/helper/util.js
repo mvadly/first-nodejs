@@ -1,7 +1,7 @@
-const moment = require("moment");
+const moment = require("moment-timezone");
 
 const getDateTime = () => {
-  return moment().format("YYYY-MM-DD HH:mm:ss ZZ");
+  return moment().tz("Asia/Jakarta").format("YYYY-MM-DD HH:mm:ss ZZ");
 };
 const util = {
   getDateTime,
