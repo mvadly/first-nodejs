@@ -3,6 +3,7 @@ const getAllVisitor = (filter, res) => {
   mdb().then((db) => {
     db.collection("visitor")
       .find()
+      .sort({ createdAt: -1 })
       .toArray((err, docs) => {
         if (err) {
           return res.status(500).json({
@@ -16,7 +17,7 @@ const getAllVisitor = (filter, res) => {
           data: docs,
         });
       });
-  })
+  });
 };
 const createVisitor = (data, res) => {
   mdb().then((db) => {
