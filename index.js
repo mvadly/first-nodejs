@@ -8,6 +8,7 @@ const Log = require("./app/middleware/log");
 const Cors = require("./app/middleware/cors");
 require("dotenv").config();
 const port = 3000;
+console.log(process.env)
 // app.use(
 //   cors({
 //     origin: "*",
@@ -16,7 +17,7 @@ const port = 3000;
 // );
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-app.use(Log);
+// app.use(Log);
 
 app.get("/", (req, res) => {
   res.json({ message: "First API Express" });
@@ -28,5 +29,5 @@ app.get("/info", (req, res) =>
 // app.use("/visitor", visitorRoute);
 app.use(notFound);
 app.listen(port, () => {
-  console.log(`Server running at http://localhost:${port}`);
+  console.log(`Server running at PORT: ${port}`);
 });
