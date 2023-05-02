@@ -25,6 +25,7 @@ app.get("/", (req, res) => {
 app.get("/info", (req, res) =>
   res.send("App Name: API Express using JSONDB <br> Version: 1.0")
 );
+
 app.use("/visitor", visitorRoute);
 app.use(notFound);
 app.listen(port, () => {

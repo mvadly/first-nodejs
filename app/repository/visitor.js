@@ -1,10 +1,11 @@
 const mdb = require("../../config/database");
-const getAllVisitor = (data, res) => {
-  mdb().then((db) => {
-    db.collection("visitor")
+const getAllVisitor = async (data, res) => {
+  await mdb().then((mdb) => {
+    mdb.db
+      .collection("visitor")
       .find(data.filter)
-      .skip(data.query.start)
-      .limit(data.query.limit)
+      .skip(parseInt(data.query.start))
+      .limit(parseInt(data.query.limit))
       .sort({ createdAt: -1 })
       .toArray((err, docs) => {
         if (err) {
@@ -22,9 +23,9 @@ const getAllVisitor = (data, res) => {
   });
 };
 
-const createVisitor = (data, res) => {
-  mdb().then((db) => {
-    db.collection("visitor").insertOne(data, (err) => {
+const createVisitor = async (data, res) => {
+  await mdb().then((mdb) => {
+    mdb.db.collection("visitor").insertOne(data, (err) => {
       if (err) {
         return res.status(500).json({
           success: false,
