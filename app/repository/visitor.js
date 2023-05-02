@@ -19,6 +19,7 @@ const getAllVisitor = (filter, res) => {
       });
   });
 };
+
 const createVisitor = (data, res) => {
   mdb().then((db) => {
     db.collection("visitor").insertOne(data, (err) => {
