@@ -12,8 +12,15 @@ dotenv.config();
 const port = process.env.PORT;
 app.use(
   cors({
-    origin: process.env.WEB_HOST,
-    optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
+    origin: (origin: any, callback: Function) => {
+      if (!origin) return callback(null, true);
+      if (process.env.WEB_HOST?.split(",").indexOf(origin) === -1) {
+        let msg: string = 'The CORS policy for this site does not allow access from the specified Origin.';
+        return callback(new Error(msg), false);
+      }
+      return callback(null, true);
+    },
+    optionsSuccessStatus: 200,
   })
 );
 app.use(bodyParser.urlencoded({ extended: false }));
