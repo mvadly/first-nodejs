@@ -8,6 +8,8 @@ const visitorController = {
   create: (req: Request, res: Response) => {
     visitorService.createVisitor(req, res);
   },
+
+  
 };
 
 module.exports = visitorController;
