@@ -1,13 +1,15 @@
 const mdb = require("../../config/database");
-const getAllVisitor = async (data, res) => {
-  mdb().then((mdb) => {
+import { Response } from "express";
+
+const getAllVisitor = async (data: any, res: Response) => {
+  mdb().then((mdb: any) => {
     mdb.db
       .collection("visitor")
       .find(data.filter)
       .skip(parseInt(data.query.start))
       .limit(parseInt(data.query.limit))
       .sort({ createdAt: -1 })
-      .toArray(async (err, docs) => {
+      .toArray(async (err: Error, docs: any) => {
         if (err) {
           return res.status(500).json({
             success: false,
@@ -27,9 +29,9 @@ const getAllVisitor = async (data, res) => {
   });
 };
 
-const createVisitor = async (data, res) => {
-  await mdb().then((mdb) => {
-    mdb.db.collection("visitor").insertOne(data, (err) => {
+const createVisitor = async (data: any, res: any) => {
+  await mdb().then((mdb: any) => {
+    mdb.db.collection("visitor").insertOne(data, (err: Error) => {
       if (err) {
         return res.status(500).json({
           success: false,

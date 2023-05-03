@@ -1,6 +1,6 @@
-const util = require("../helper/util");
-
-const Log = (req, res, next) => {
+import { NextFunction, Request, Response } from "express";
+const util = require("../helper/util")
+const Log = (req: Request, res: Response, next: NextFunction) => {
   console.log({
     TIME: util.getDateTime(),
     METHOD: req.method,
@@ -15,4 +15,4 @@ const Log = (req, res, next) => {
   next();
 };
 
-module.exports = Log;
+export default Log;

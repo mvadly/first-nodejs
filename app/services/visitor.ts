@@ -1,7 +1,7 @@
 const util = require("../helper/util");
 const visitorRepository = require("../repository/visitor");
 const Validator = require("validatorjs");
-const getAllVisitor = (req, res) => {
+const getAllVisitor = (req: any, res: any) => {
   const filter = {
     name: { $regex: req?.query?.search ?? "", $options: "i" },
   };
@@ -15,7 +15,7 @@ const getAllVisitor = (req, res) => {
   };
   visitorRepository.getAllVisitor(data, res);
 };
-const createVisitor = (req, res) => {
+const createVisitor = (req: any, res: any) => {
   const validationRule = {
     name: "required|string",
     message: "required|string",

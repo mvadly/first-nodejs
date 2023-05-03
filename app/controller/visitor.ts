@@ -1,14 +1,11 @@
-const validator = require("../helper/validation");
-const visitorRepository = require("../repository/visitor");
 const visitorService = require("../services/visitor");
-const util = require("../helper/util");
-
+import { Request, Response } from "express";
 const visitorController = {
-  getAll: (req, res) => {
+  getAll: (req: Request, res: Response) => {
     visitorService.getAllVisitor(req, res);
   },
 
-  create: (req, res) => {
+  create: (req: Request, res: Response) => {
     visitorService.createVisitor(req, res);
   },
 };
