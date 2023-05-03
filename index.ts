@@ -5,13 +5,14 @@ import bodyParser from 'body-parser'
 import cors from "cors";
 import Log from './app/middleware/log';
 const visitorRoute: Router = require("./app/routes/visitor")
+const notFound: Router = require("./app/middleware/notfound")
 const app: Express = express();
 dotenv.config();
 
 const port = process.env.PORT;
 app.use(
   cors({
-    origin: "*",
+    origin: process.env.WEB_HOST,
     optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
   })
 );
@@ -28,7 +29,7 @@ app.get("/info", (req: Request, res: Response) => {
 });
 
 app.use("/visitor", visitorRoute);
-// app.use(notFound);
+app.use(notFound);
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
 });
