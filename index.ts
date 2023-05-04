@@ -1,5 +1,5 @@
 import express, { Express, Request, Response, Router } from 'express';
-import dotenv from 'dotenv';
+const dotenv = require('dotenv');
 
 import bodyParser from 'body-parser'
 import cors from "cors";
@@ -13,6 +13,8 @@ const mdb = require('./config/db')
 
 app.use(
   cors({
+    credentials: true,
+    methods: ['GET', 'POST', 'DELETE', 'UPDATE', 'PUT', 'PATCH'],
     origin: (origin: any, callback: Function) => {
       if (!origin) return callback(null, true);
       if (process.env.WEB_HOST?.split(",").indexOf(origin) === -1) {

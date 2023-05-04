@@ -1,6 +1,6 @@
 import mongoose, { ConnectOptions } from "mongoose";
-const callMongo = () => {
-     mongoose.connect(process.env.MONGODB_URI!, {
+const callMongo = async () => {
+     await mongoose.connect(process.env.MONGODB_URI!, {
         useNewUrlParser: true,
         useUnifiedTopology: true,
     } as ConnectOptions).then(() => {
