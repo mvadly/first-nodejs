@@ -4,12 +4,12 @@ import dotenv from 'dotenv';
 import bodyParser from 'body-parser'
 import cors from "cors";
 import Log from './app/middleware/log';
-const visitorRoute: Router = require("./app/routes/visitor")
+dotenv.config();
+const visitorRoute = require("./app/routes/visitor")
 const notFound: Router = require("./app/middleware/notfound")
 const app: Express = express();
-dotenv.config();
-require("./config/db")
 const port = process.env.PORT;
+const mdb = require('./config/db')
 
 app.use(
   cors({
@@ -36,7 +36,7 @@ app.get("/info", (req: Request, res: Response) => {
   res.send("App Name: API Express using JSONDB <br> Version: 1.0")
 });
 
-app.use("/visitor", visitorRoute);
+app.use("/visitor/", visitorRoute)
 app.use(notFound);
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
