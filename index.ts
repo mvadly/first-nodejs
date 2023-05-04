@@ -4,13 +4,13 @@ import dotenv from 'dotenv';
 import bodyParser from 'body-parser'
 import cors from "cors";
 import Log from './app/middleware/log';
-import mongoose, { ConnectOptions, Mongoose } from 'mongoose';
-const app: Express = express();
 const visitorRoute: Router = require("./app/routes/visitor")
 const notFound: Router = require("./app/middleware/notfound")
+const app: Express = express();
 dotenv.config();
-
+require("./config/db")
 const port = process.env.PORT;
+
 app.use(
   cors({
     origin: (origin: any, callback: Function) => {
@@ -27,16 +27,6 @@ app.use(
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(Log);
-
-mongoose.connect(process.env.MONGODB_URI!, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-} as ConnectOptions).then((e:any) => {
-  console.log('Connected to MongoDB');
-}).catch((err) => {
-  console.error('Error connecting to MongoDB', err);
-  process.exit
-});
 
 app.get("/", (req: Request, res: Response) => {
   res.json({ message: "First API Express Using TypeScript" });

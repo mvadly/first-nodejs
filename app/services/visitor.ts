@@ -39,6 +39,7 @@ const createVisitor = (req: any, res: any) => {
     lng: req.body?.lng ?? null,
     message: req.body.message,
     createdAt: util.getDateTime(),
+    ip: req?.socket?.remoteAddress ?? null
   };
 
   visitorRepository.createVisitor(request, res);

@@ -1,4 +1,3 @@
-const mdb = require("../../config/database");
 const vModel = require("../model/visitor");
 import { Response } from "express";
 const getAllVisitor = async (data: any, res: Response) => {
