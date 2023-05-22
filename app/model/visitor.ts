@@ -4,6 +4,8 @@ const visitorSchema = new mongoose.Schema({
   message: { type: String, required: true },
   lat: { type: String, required: false },
   lng: { type: String, required: false },
+  from: { type: Array, required: true },
+  ip: { type: String, required: true },
   createdAt: { type: String, required: true },
 } as ConnectOptions);
 

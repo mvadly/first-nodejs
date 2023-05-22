@@ -38,6 +38,7 @@ const createVisitor = (req: any, res: any) => {
     lat: req.body?.lat ?? null,
     lng: req.body?.lng ?? null,
     message: req.body.message,
+    from: req.body?.from ?? [],
     createdAt: util.getDateTime(),
     ip: req?.socket?.remoteAddress ?? null
   };
