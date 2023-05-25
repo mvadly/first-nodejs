@@ -5,4 +5,6 @@ const notFound = (req: any, res: any) => {
       "Ohh you are lost, read the API documentation to find your way back home :)",
   });
 };
-module.exports = notFound;
+
+export default notFound
+

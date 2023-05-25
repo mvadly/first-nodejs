@@ -10,5 +10,5 @@ const visitorSchema = new mongoose.Schema({
 } as ConnectOptions);
 
 // Create a model based on the schema
-const vModel = mongoose.model("visitor", visitorSchema);
+const vModel: mongoose.Model<mongoose.ConnectOptions, {}, {}, {}, mongoose.Schema<any, mongoose.Model<any, any, any, any, any>, {}, {}, {}, {}, mongoose.DefaultSchemaOptions, mongoose.ConnectOptions>> = mongoose.model("visitor", visitorSchema);
 module.exports = vModel;

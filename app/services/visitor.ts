@@ -1,7 +1,10 @@
 const util = require("../helper/util");
-const visitorRepository = require("../repository/visitor");
 const Validator = require("validatorjs");
-const getAllVisitor = (req: any, res: any) => {
+import { Request, Response } from "express";
+import * as repo from "../repository/visitor"
+import { ResponseService, responseService } from "../model/model";
+
+export const getAllVisitor = async (req: Request, res: Response): Promise<ResponseService> => {
   const filter: Object = {
     name: { $regex: req?.query?.search ?? "", $options: "i" },
   };
@@ -13,9 +16,11 @@ const getAllVisitor = (req: any, res: any) => {
       limit: req?.query?.limit ?? 10,
     },
   };
-  visitorRepository.getAllVisitor(data, res);
+
+  return await repo.getAllVisitor(data, res)
 };
-const createVisitor = (req: any, res: any) => {
+
+export const createVisitor = async (req: Request, res: Response): Promise<ResponseService | any> => {
   const validationRule = {
     name: "required|string",
     message: "required|string",
@@ -26,11 +31,7 @@ const createVisitor = (req: any, res: any) => {
   const validation = new Validator(req.body, validationRule);
 
   if (validation.fails()) {
-    return res.status(400).send({
-      success: false,
-      message: "Validation failed",
-      data: validation.errors.all(),
-    });
+    return responseService(400, "Validation failed", validation.errors.all());
   }
 
   const request = {
@@ -43,11 +44,5 @@ const createVisitor = (req: any, res: any) => {
     ip: req?.socket?.remoteAddress ?? null
   };
 
-  visitorRepository.createVisitor(request, res);
-};
-const visitorService = {
-  getAllVisitor,
-  createVisitor,
-};
-
-module.exports = visitorService;
+  return await repo.createVisitor(request, res);
+}
