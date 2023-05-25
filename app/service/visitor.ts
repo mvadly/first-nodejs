@@ -20,7 +20,7 @@ export const getAllVisitor = async (req: Request, res: Response): Promise<Respon
   return await repo.getAllVisitor(data, res)
 };
 
-export const createVisitor = async (req: Request, res: Response): Promise<ResponseService | any> => {
+export const createVisitor = async (req: Request, res: Response): Promise<ResponseService | ResponseService> => {
   const validationRule = {
     name: "required|string",
     message: "required|string",
