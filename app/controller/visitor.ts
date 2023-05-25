@@ -1,4 +1,4 @@
-import * as svc from "../services/visitor"
+import * as svc from "../service/visitor"
 import { Request, Response } from "express";
 export const visitorController = {
   getAll: async (req: Request, res: Response) => {
