@@ -6,6 +6,7 @@ import cors from "cors";
 import Log from './app/middleware/log';
 import VisitorRoute from './app/routes/visitor';
 import notFound from './app/middleware/notfound';
+import GuestRoute from './app/routes/guest';
 dotenv.config();
 const app: Express = express();
 const port = process.env.PORT;
@@ -39,6 +40,7 @@ app.get("/info", (req: Request, res: Response) => {
 });
 
 app.use("/visitor/", VisitorRoute)
+app.use("/guest/", GuestRoute)
 app.use(notFound);
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
