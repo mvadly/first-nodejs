@@ -1,7 +1,7 @@
 const vModel = require("../model/visitor");
 import { Response } from "express";
 import { ResponseService, responseService } from "../model/model";
-export const getAllVisitor = async (data: any, res: Response): Promise<ResponseService> => {
+export const getAllVisitor = async (data: any): Promise<ResponseService> => {
   try {
     const visitor = await vModel.find()
       .skip(parseInt(data.query.start))
@@ -17,7 +17,7 @@ export const getAllVisitor = async (data: any, res: Response): Promise<ResponseS
   }
 };
 
-export const createVisitor = async (data: any, res: Response): Promise<ResponseService> => {
+export const createVisitor = async (data: any): Promise<ResponseService> => {
   try {
     const vSave = new vModel(data);
     const insert = await vSave.save()
@@ -26,3 +26,14 @@ export const createVisitor = async (data: any, res: Response): Promise<ResponseS
     return responseService(500, "Internal server error: " + err.message, null)
   }
 };
+
+export const deleteVisitor = async (data: any): Promise<ResponseService> => {
+  try {
+    const vDel = new vModel(data);
+    const del = await vDel.deleteOne({ _id: data._id })
+    return responseService(200, "OK", del)
+  } catch (err: any) {
+    return responseService(500, "Internal server error: " + err.message, null)
+  }
+};
+
