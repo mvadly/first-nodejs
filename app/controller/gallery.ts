@@ -14,8 +14,20 @@ export const galleryController = {
                 const result = responseService(500, "internal server error:" + err.message);
                 return res.status(result.statusCode).json(result.data);
             }
+            let data: any[] = []
+            const inputArray = files;
+            const chunkSize = 3; // Number of elements in each chunk
 
-            const result = responseService(200, "OK", files);
+            for (let i = 0; i < inputArray.length; i += chunkSize) {
+                const chunk = inputArray.slice(i, i + chunkSize);
+                const urls: any = []
+                chunk.forEach((v) => {
+                    urls.push(`${process.env.APP_HOST}/asset/gallery/${v}`)
+                })
+                data.push({ list: urls });
+            }
+
+            const result = responseService(200, "OK", data);
             return res.status(result.statusCode).json(result.data);
         });
     }

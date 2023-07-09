@@ -42,6 +42,8 @@ app.get("/info", (req: Request, res: Response) => {
   res.send("App Name: API Express using JSONDB <br> Version: 1.0")
 });
 
+app.use("/asset/gallery",express.static('assets/gallery'));
+
 app.use("/visitor/", VisitorRoute)
 app.use("/guest/", GuestRoute)
 app.use("/gallery/", GalleryRoute)
