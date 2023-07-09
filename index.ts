@@ -7,6 +7,9 @@ import Log from './app/middleware/log';
 import VisitorRoute from './app/routes/visitor';
 import notFound from './app/middleware/notfound';
 import GuestRoute from './app/routes/guest';
+import { createServer } from 'http';
+import { Server } from 'socket.io';
+import GalleryRoute from './app/routes/gallery';
 dotenv.config();
 const app: Express = express();
 const port = process.env.PORT;
@@ -41,7 +44,24 @@ app.get("/info", (req: Request, res: Response) => {
 
 app.use("/visitor/", VisitorRoute)
 app.use("/guest/", GuestRoute)
+app.use("/gallery/", GalleryRoute)
+
 app.use(notFound);
-app.listen(port, () => {
+const httpServer = createServer(app);
+const io = new Server(httpServer, {
+  cors:{
+    origin:"*"
+  }
+});
+
+io.on("connection", (socket) => {
+  console.log("socket connect")
+  socket.emit("hello", "asasdasdasdd")
+  socket.emit("howdy", (args:any)=>{
+    console.log("ngising:",args)
+  })
+});
+
+httpServer.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
 });
