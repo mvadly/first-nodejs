@@ -2,6 +2,7 @@ import * as svc from "../service/visitor"
 import { Request, Response } from "express";
 import fs from "fs"
 import { responseService } from "../model/model";
+const util = require("../helper/util");
 const path = require('path');
 export const galleryController = {
     getAll: async (req: Request, res: Response): Promise<void> => {
@@ -21,10 +22,14 @@ export const galleryController = {
             for (let i = 0; i < inputArray.length; i += chunkSize) {
                 const chunk = inputArray.slice(i, i + chunkSize);
                 const urls: any = []
-                chunk.forEach((v) => {
-                    urls.push(`${process.env.APP_HOST}/asset/gallery/${v}`)
+                chunk.forEach(async (v) => {
+                    urls.push({
+                        size: util.getSize(folderPath + "/" + v),
+                        type: path.extname(folderPath + "/" + v).toLowerCase(),
+                        src: `${process.env.APP_HOST}/asset/gallery/${v}`
+                    })
                 })
-                data.push({ list: urls });
+                data.push({ gallery: urls });
             }
 
             const result = responseService(200, "OK", data);
