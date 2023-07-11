@@ -1,56 +1,39 @@
-const mdb = require("../../config/database");
+const vModel = require("../model/visitor");
 import { Response } from "express";
-
-const getAllVisitor = async (data: any, res: Response) => {
-  mdb().then((mdb: any) => {
-    mdb.db
-      .collection("visitor")
-      .find(data.filter)
+import { ResponseService, responseService } from "../model/model";
+export const getAllVisitor = async (data: any): Promise<ResponseService> => {
+  try {
+    const visitor = await vModel.find()
       .skip(parseInt(data.query.start))
       .limit(parseInt(data.query.limit))
       .sort({ createdAt: -1 })
-      .toArray(async (err: Error, docs: any) => {
-        if (err) {
-          return res.status(500).json({
-            success: false,
-            message: "Internal server error: " + err.message,
-          });
-        }
-        return res.status(200).json({
-          success: true,
-          message: "OK",
-          data: {
-            list: docs,
-            filtered: docs.length,
-            total: await mdb.db.collection("visitor").estimatedDocumentCount(),
-          },
-        });
-      });
-  });
+    return responseService(200, "OK", {
+      list: visitor,
+      filtered: visitor.length,
+      total: await vModel.estimatedDocumentCount(),
+    })
+  } catch (err: any) {
+    return responseService(500, "Internal server error: " + err.message)
+  }
 };
 
-const createVisitor = async (data: any, res: any) => {
-  await mdb().then((mdb: any) => {
-    mdb.db.collection("visitor").insertOne(data, (err: Error) => {
-      if (err) {
-        return res.status(500).json({
-          success: false,
-          message: "Internal server error: " + err.message,
-        });
-      }
-
-      return res.status(200).json({
-        success: true,
-        message: "OK",
-        data: data,
-      });
-    });
-  });
+export const createVisitor = async (data: any): Promise<ResponseService> => {
+  try {
+    const vSave = new vModel(data);
+    const insert = await vSave.save()
+    return responseService(201, "OK", insert)
+  } catch (err: any) {
+    return responseService(500, "Internal server error: " + err.message, null)
+  }
 };
 
-const visitorRepository = {
-  getAllVisitor,
-  createVisitor,
+export const deleteVisitor = async (data: any): Promise<ResponseService> => {
+  try {
+    const vDel = new vModel(data);
+    const del = await vDel.deleteOne({ _id: data._id })
+    return responseService(200, "OK", del)
+  } catch (err: any) {
+    return responseService(500, "Internal server error: " + err.message, null)
+  }
 };
 
-module.exports = visitorRepository;

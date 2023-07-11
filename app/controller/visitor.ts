@@ -1,13 +1,19 @@
-const visitorService = require("../services/visitor");
+import * as svc from "../service/visitor"
 import { Request, Response } from "express";
-const visitorController = {
-  getAll: (req: Request, res: Response) => {
-    visitorService.getAllVisitor(req, res);
+export const visitorController = {
+  getAll: async (req: Request, res: Response): Promise<void> => {
+    const result = await svc.getAllVisitor(req);
+    res.status(result.statusCode).json(result.data)
   },
 
-  create: (req: Request, res: Response) => {
-    visitorService.createVisitor(req, res);
+  create: async (req: Request, res: Response): Promise<void> => {
+    const result = await svc.createVisitor(req);
+    res.status(result.statusCode).json(result.data)
+  },
+
+  delete: async (req: Request, res: Response): Promise<void> => {
+    const result = await svc.deleteVisitor(req);
+    res.status(result.statusCode).json(result.data)
   },
 };
 
-module.exports = visitorController;
